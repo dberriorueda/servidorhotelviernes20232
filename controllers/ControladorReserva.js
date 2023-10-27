@@ -169,7 +169,7 @@ export class ControladorHabitacion{
     }
 }
 
-function calcularDias(datos){
+/*function calcularDias(datos){
     let fechaEntrada = new Date(datos.fechaEntrada)
     let fechaSalida = new Date(datos.fechaSalida)
 
@@ -185,4 +185,4 @@ function calcularDias(datos){
  }
 
  const diferenciaDias = calcularDias(habitacion)
- console.log("Diferencia en dias:", diferenciaDias)
+ console.log("Diferencia en dias:", diferenciaDias)*/

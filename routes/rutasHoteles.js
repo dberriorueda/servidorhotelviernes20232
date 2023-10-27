@@ -3,13 +3,23 @@
 import express from "express";
 
 import {ControladorHabitacion} from '../controllers/ControladorHabitacion.js'
-let controlador=new ControladorHabitacion()
+import {ControladorReservas} from '../controllers/ControladorReserva.js'
+
+
+let controladorReservas = new ControladorReservas()
+let controladorHabitaciones=new ControladorHabitacion()
 
 export let rutasAPI = express.Router();
 
 //ACA PONE SUS ENDPOINTS
-rutasAPI.post("/api/habitaciones", controlador.registrar)
-rutasAPI.get("/api/habitaciones", controlador.buscarTodas )
-rutasAPI.get("/api/habitacion/:id", controlador.buscarPorId )
-rutasAPI.put("/api/habitaciones/:id", controlador.modificar)
-rutasAPI.delete("/api/habitaciones/:id", controlador.eliminar)
+rutasAPI.post("/api/habitaciones", controladorHabitaciones.registrar)
+rutasAPI.get("/api/habitaciones", controladorHabitaciones.buscarTodas )
+rutasAPI.get("/api/habitacion/:id", controladorHabitaciones.buscarPorId )
+rutasAPI.put("/api/habitaciones/:id", controladorHabitaciones.modificar)
+rutasAPI.delete("/api/habitaciones/:id", controladorHabitaciones.eliminar)
+
+rutasAPI.post("/api/reservas", controladorReservas.registrar)
+rutasAPI.get("/api/reservas", controladorReservas.buscaTodas)
+rutasAPI.get("/api/reserva/:id", controladorReservas.buscarPorId)
+rutasAPI.put("/api/reservas/:id", controladorReservas.modificar)
+rutasAPI.post("/api/reservas/:id", controladorReservas.eliminar)

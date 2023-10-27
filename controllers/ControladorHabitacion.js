@@ -52,9 +52,11 @@ export class ControladorHabitacion{
         try{
             let servicioHabitacion =new ServicioHabitacion()
             let datos=request.body
+            console.log(request)
+            await servicioHabitacion.registrar(datos)
             response.status(200).json({
                 "mensaje":"Habitacion registrada",
-                "datos":datos.precio,
+                "datos":datos,
                 "diferencia":"diferencia en dias calculada"
             })
         }catch(error){
@@ -87,7 +89,7 @@ export class ControladorHabitacion{
     }
 }
 
-function calcularDias(datos){
+/*function calcularDias(datos){
     let fechaEntrada = new Date(datos.fechaEntrada)
     let fechaSalida = new Date(datos.fechaSalida)
 
@@ -103,4 +105,4 @@ function calcularDias(datos){
  }
 
  const diferenciaDias = calcularDias(habitacion)
- console.log("Diferencia en dias:", diferenciaDias)
+ console.log("Diferencia en dias:", diferenciaDias)*/
