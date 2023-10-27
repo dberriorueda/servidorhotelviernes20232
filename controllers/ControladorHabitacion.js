@@ -38,7 +38,7 @@ export class ControladorHabitacion{
             await servicioHabitacion.modificar(id,datos)
             response.status(200).json({
                 "mensaje":"exito buscando los datos",
-                "datos":"aca los datos" //como ver los datos
+                "datos":await servicioHabitacion.modificar(id,datos)
             })
         }catch(error){
             response.status(400).json({
@@ -70,11 +70,12 @@ export class ControladorHabitacion{
             let id=request.params.id
             response.status(200).json({
                 "mensaje":"exito buscando los datos",
-                "datos":"aca los datos"
+                "datos": servicioHabitacion.eliminar(id)
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"fallamos"+error
+                "mensaje":"fallamos"+error,
+                "datos": await servicioHabitacion.eliminar(id)
             })
         }
     }
