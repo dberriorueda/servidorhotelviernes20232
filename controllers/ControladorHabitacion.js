@@ -1,4 +1,6 @@
 import { ServicioHabitacion } from "../services/ServicioHabitacion.js"
+
+
 export class ControladorHabitacion{
     constructor(){}
 
@@ -37,12 +39,12 @@ export class ControladorHabitacion{
             let datos=request.body
             await servicioHabitacion.modificar(id,datos)
             response.status(200).json({
-                "mensaje":"exito buscando los datos",
+                "mensaje":"Habitacion modificada",
                 "datos":await servicioHabitacion.modificar(id,datos)
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"fallamos"+error
+                "mensaje":"fallamos"+error.message
             })
         }
     }
@@ -50,11 +52,8 @@ export class ControladorHabitacion{
         try{
             let servicioHabitacion =new ServicioHabitacion()
             let datos=request.body
-            // tomar 2 fechas del objeto datos
-            // la diferencia en dias de esa fecha
-            //await servicioHabitacion.registrar(datos)
             response.status(200).json({
-                "mensaje":"exito buscando los datos",
+                "mensaje":"Habitacion registrada",
                 "datos":datos.precio,
                 "diferencia":"diferencia en dias calculada"
             })
@@ -68,15 +67,40 @@ export class ControladorHabitacion{
         try{
             let servicioHabitacion =new ServicioHabitacion()
             let id=request.params.id
-            response.status(200).json({
-                "mensaje":"exito buscando los datos",
-                "datos": servicioHabitacion.eliminar(id)
-            })
+            const resultado = await servicioHabitacion.eliminar(id)
+
+            if (resultado){
+                response.status(200).json({
+                    "mensaje":"Habitacion eliminada"
+                })
+            }else{
+                response.status(404).json({
+                    "mensaje":"La habitacion no fue encontrada"
+                })
+            }
         }catch(error){
             response.status(400).json({
-                "mensaje":"fallamos"+error,
-                "datos": await servicioHabitacion.eliminar(id)
+                "mensaje":"fallamos"+error.message,
+                "datos": await ServicioHabitacion.eliminar(id)
             })
         }
     }
 }
+
+function calcularDias(datos){
+    let fechaEntrada = new Date(datos.fechaEntrada)
+    let fechaSalida = new Date(datos.fechaSalida)
+
+    let diferenciasMilisegundos = fechaSalida - fechaEntrada
+
+    let diferenciaDias = diferenciasMilisegundos / (1000 * 60 * 60 * 24)
+
+    return diferenciaDias
+}
+ const habitacion = {
+    fechaEntrada: "2023-10-01",
+    fechaSalida: "2023-10-15",
+ }
+
+ const diferenciaDias = calcularDias(habitacion)
+ console.log("Diferencia en dias:", diferenciaDias)
